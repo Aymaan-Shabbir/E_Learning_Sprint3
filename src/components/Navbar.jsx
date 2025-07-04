@@ -1,13 +1,32 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { fetchData } from "../api";
 
 const Navbar = () => {
   const navigate = useNavigate();
+  const [user, setUser] = useState({ name: "", email: "", role: "" });
 
-  // Read loggedInUser object from localStorage
-  const storedUser = JSON.parse(localStorage.getItem("loggedInUser")) || {};
-  const role = storedUser.role || "Welcome";
-  const name = storedUser.name || "User";
+  useEffect(() => {
+    const storedUser = JSON.parse(localStorage.getItem("loggedInUser"));
+    if (storedUser?.email) {
+      fetchData("users")
+        .then((users) => {
+          const found = users.find((u) => u.email === storedUser.email);
+          if (found) {
+            setUser({
+              name: found.name || found.email,
+              email: found.email,
+              role: found.role,
+            });
+          } else {
+            console.warn("User not found in DB.");
+          }
+        })
+        .catch((err) => {
+          console.error("Failed to fetch users:", err);
+        });
+    }
+  }, []);
 
   const handleLogout = () => {
     localStorage.removeItem("loggedInUser");
@@ -56,15 +75,13 @@ const Navbar = () => {
             }}
             data-bs-toggle="dropdown"
           >
-            {role}
+            {user.name || "Profile"}
           </span>
           <ul className="dropdown-menu dropdown-menu-end text-center">
             <li>
-              <span className="dropdown-item-text text-muted">{role}</span>
+              <h6 className="dropdown-header">{user.email || "Welcome"}</h6>
             </li>
-            <li>
-              <h6 className="dropdown-header">{name || "Unknown"}</h6>
-            </li>
+            <li></li>
             <li>
               <hr className="dropdown-divider" />
             </li>

@@ -1,12 +1,6 @@
 {
   "users": [
     {
-      "id": "1",
-      "email": "admin@example.com",
-      "password": "admin123",
-      "role": "admin"
-    },
-    {
       "id": "832a",
       "name": "Arya",
       "email": "a@gmail.com",
@@ -40,6 +34,20 @@
       "email": "abc@gmail.com",
       "password": "Snip@1000",
       "role": "user"
+    },
+    {
+      "id": "c219",
+      "name": "Acer",
+      "email": "acer@gmail.com",
+      "password": "Snip@1000",
+      "role": "admin"
+    },
+    {
+      "id": "fb30",
+      "name": "Vandal",
+      "email": "v@gmail.com",
+      "password": "Snip@1000",
+      "role": "user"
     }
   ],
   "courses": [
@@ -50,7 +58,12 @@
       "video": "https://www.youtube.com/embed/PoRJizFvM7s",
       "thumbnail": "../assets/images/course 1.jpg",
       "reviews": 4.6,
-      "id": "71c0"
+      "id": "71c0",
+      "instructor": {
+        "name": "Aman Verma",
+        "email": "aman.verma@edulearn.in",
+        "specialization": "programming"
+      }
     },
     {
       "title": "Advanced CSS",
@@ -59,7 +72,12 @@
       "video": "https://www.youtube.com/embed/1Rs2ND1ryYc",
       "thumbnail": "../assets/images/course 2.png",
       "reviews": 4.8,
-      "id": "fc46"
+      "id": "fc46",
+      "instructor": {
+        "name": "Neha Sharma",
+        "email": "neha.sharma@edulearn.in",
+        "specialization": "design"
+      }
     },
     {
       "title": "Startup Business 101",
@@ -68,7 +86,12 @@
       "video": "https://www.youtube.com/embed/wzX3gGYCxTk",
       "thumbnail": "../assets/images/course 4.png",
       "reviews": "3.5",
-      "id": "c127"
+      "id": "c127",
+      "instructor": {
+        "name": "Rajat Kapoor",
+        "email": "rajat.kapoor@edulearn.in",
+        "specialization": "business"
+      }
     },
     {
       "title": "Python for Data Analysis",
@@ -77,7 +100,12 @@
       "video": "https://www.youtube.com/embed/r-uOLxNrNk8",
       "thumbnail": "../assets/images/course 5.jpg",
       "reviews": 4.7,
-      "id": "beed"
+      "id": "beed",
+      "instructor": {
+        "name": "Sneha Iyer",
+        "email": "sneha.iyer@edulearn.in",
+        "specialization": "data-science"
+      }
     },
     {
       "title": "ReactJS Crash Course",
@@ -86,7 +114,12 @@
       "video": "https://www.youtube.com/embed/bMknfKXIFA8",
       "thumbnail": "../assets/images/course 6.png",
       "reviews": 4.9,
-      "id": "6796"
+      "id": "6796",
+      "instructor": {
+        "name": "Rohit Mehra",
+        "email": "rohit.mehra@edulearn.in",
+        "specialization": "programming"
+      }
     },
     {
       "title": "UI/UX Design Principles",
@@ -95,7 +128,12 @@
       "video": "https://www.youtube.com/embed/3JluqTojuME",
       "thumbnail": "../assets/images/course 7.png",
       "reviews": 4.4,
-      "id": "ed12"
+      "id": "ed12",
+      "instructor": {
+        "name": "Tanvi Deshmukh",
+        "email": "tanvi.deshmukh@edulearn.in",
+        "specialization": "design"
+      }
     },
     {
       "title": "Social Media Marketing",
@@ -104,7 +142,12 @@
       "video": "https://www.youtube.com/embed/nlR0MkrRklg",
       "thumbnail": "../assets/images/course 8.jpg",
       "reviews": 4.1,
-      "id": "7659"
+      "id": "7659",
+      "instructor": {
+        "name": "Vikram Joshi",
+        "email": "vikram.joshi@edulearn.in",
+        "specialization": "marketing"
+      }
     },
     {
       "title": "Business Analytics",
@@ -113,7 +156,12 @@
       "video": "https://www.youtube.com/embed/JVjfuYyzd8c",
       "thumbnail": "../assets/images/course 9.png",
       "reviews": 4.5,
-      "id": "c31b"
+      "id": "c31b",
+      "instructor": {
+        "name": "Kavya Nair",
+        "email": "kavya.nair@edulearn.in",
+        "specialization": "business"
+      }
     },
     {
       "title": "Machine Learning Basics",
@@ -122,7 +170,12 @@
       "video": "https://www.youtube.com/embed/GwIo3gDZCVQ",
       "thumbnail": "../assets/images/course 10.jpg",
       "reviews": 4.6,
-      "id": "542d"
+      "id": "542d",
+      "instructor": {
+        "name": "Ankit Rathi",
+        "email": "ankit.rathi@edulearn.in",
+        "specialization": "data-science"
+      }
     },
     {
       "title": "Node.js & Express",
@@ -131,7 +184,12 @@
       "video": "https://www.youtube.com/embed/Oe421EPjeBE",
       "thumbnail": "../assets/images/course 11.png",
       "reviews": 4.3,
-      "id": "22a2"
+      "id": "22a2",
+      "instructor": {
+        "name": "Sanya Bhatia",
+        "email": "sanya.bhatia@edulearn.in",
+        "specialization": "programming"
+      }
     },
     {
       "title": "Figma for Beginners",
@@ -140,7 +198,12 @@
       "video": "https://www.youtube.com/embed/FTFaQWZBqQ8",
       "thumbnail": "../assets/images/course 12.png",
       "reviews": 4,
-      "id": "0d4e"
+      "id": "0d4e",
+      "instructor": {
+        "name": "Rahul Jain",
+        "email": "rahul.jain@edulearn.in",
+        "specialization": "design"
+      }
     },
     {
       "title": "Email Marketing Mastery",
@@ -149,7 +212,12 @@
       "video": "https://www.youtube.com/embed/1Q5K1dIO0Ck",
       "thumbnail": "../assets/images/course 13.jpg",
       "reviews": 3.8,
-      "id": "3e3d"
+      "id": "3e3d",
+      "instructor": {
+        "name": "Isha Malik",
+        "email": "isha.malik@edulearn.in",
+        "specialization": "marketing"
+      }
     },
     {
       "title": "Entrepreneurship Essentials",
@@ -158,7 +226,12 @@
       "video": "https://www.youtube.com/embed/gfevQofpIFo",
       "thumbnail": "../assets/images/course 14.jpg",
       "reviews": 3.7,
-      "id": "4e5d"
+      "id": "4e5d",
+      "instructor": {
+        "name": "Rohan Sinha",
+        "email": "rohan.sinha@edulearn.in",
+        "specialization": "business"
+      }
     },
     {
       "title": "Data Visualization with Tableau",
@@ -167,7 +240,68 @@
       "video": "https://www.youtube.com/embed/pefVt0zGZ0Q",
       "thumbnail": "../assets/images/course 15.jpg",
       "reviews": 4.6,
-      "id": "0cb0"
+      "id": "0cb0",
+      "instructor": {
+        "name": "Priya Das",
+        "email": "priya.das@edulearn.in",
+        "specialization": "data-science"
+      }
+    }
+  ],
+  "feedback": [
+    {
+      "id": "1",
+      "courseId": "71c0",
+      "courseTitle": "JavaScript Essentials",
+      "name": "Arya",
+      "email": "a@gmail.com",
+      "feedback": "Great course on JavaScript fundamentals!",
+      "date": "2025-07-04 10:45:00"
+    },
+    {
+      "id": "2",
+      "courseId": "beed",
+      "courseTitle": "Python for Data Analysis",
+      "name": "Aymaan Shabbir",
+      "email": "abc@gmail.com",
+      "feedback": "Helped me understand data wrangling very clearly.",
+      "date": "2025-07-04 11:10:00"
+    },
+    {
+      "id": "9726",
+      "courseId": "fc46",
+      "courseTitle": "Advanced CSS",
+      "name": "Disha Makal",
+      "email": "disha@gmail.com",
+      "feedback": "CSS course is informative",
+      "date": "7/4/2025, 1:44:55 PM"
+    },
+    {
+      "id": "b7f3",
+      "courseId": "fc46",
+      "courseTitle": "Advanced CSS",
+      "name": "eww",
+      "email": "ewwe",
+      "feedback": "ewwwww",
+      "date": "7/4/2025, 2:16:15 PM"
+    },
+    {
+      "id": "b6a6",
+      "courseId": "fc46",
+      "courseTitle": "Advanced CSS",
+      "name": "dipanni",
+      "email": "d@gmail.com",
+      "feedback": "informative",
+      "date": "7/4/2025, 2:22:24 PM"
+    },
+    {
+      "id": "7e06",
+      "courseId": "fc46",
+      "courseTitle": "Advanced CSS",
+      "name": "Aymaan Shabbir22",
+      "email": "abc@gmail.com",
+      "feedback": "informative",
+      "date": "7/4/2025, 4:44:26 PM"
     }
   ]
 }

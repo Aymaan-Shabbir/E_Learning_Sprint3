@@ -15,6 +15,8 @@ import CoursesPage from "./pages/CoursesPage";
 import TopRatedCourses from "./pages/TopRatedCourses";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
+import InstructorsPage from "./pages/InstructorsPage";
+import FeedbackPage from "./pages/FeedbackPage";
 
 // ✅ AppWrapper handles layout rendering
 const AppWrapper = () => {
@@ -35,6 +37,12 @@ const AppWrapper = () => {
         <Route path="/toprated" element={<TopRatedCourses />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
+        <Route path="/instructors" element={<InstructorsPage />} />
+        <Route path="/feedback" element={<FeedbackPage />} />
+
+        {/* Add more routes as needed */}
+
+        {/* 404 Not Found Route */}
         <Route
           path="*"
           element={

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { fetchData, deleteData, postData, updateData } from "../api";
+import { Link } from "react-router-dom";
 
 const CoursesPage = () => {
   const [courses, setCourses] = useState([]);
@@ -14,7 +15,20 @@ const CoursesPage = () => {
 
   const [showReviewModal, setShowReviewModal] = useState(false);
   const [currentReviewCourse, setCurrentReviewCourse] = useState(null);
-  const [reviewText, setReviewText] = useState("");
+  const [feedbackForm, setFeedbackForm] = useState({
+    name: "",
+    email: "",
+    feedback: "",
+  });
+
+  const [showAssignModal, setShowAssignModal] = useState(false);
+  const [currentCourseForInstructor, setCurrentCourseForInstructor] =
+    useState(null);
+  const [instructorData, setInstructorData] = useState({
+    name: "",
+    email: "",
+    specialization: "",
+  });
 
   const [showCourseModal, setShowCourseModal] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
@@ -73,13 +87,28 @@ const CoursesPage = () => {
 
   const handleReview = (course) => {
     setCurrentReviewCourse(course);
-    setReviewText("");
+    setFeedbackForm({ name: "", email: "", feedback: "" });
     setShowReviewModal(true);
   };
 
-  const submitReview = () => {
-    if (!reviewText.trim()) return alert("Please enter a review.");
-    alert(`Review submitted for ${currentReviewCourse.title}: ${reviewText}`);
+  const submitFeedback = async () => {
+    const { name, email, feedback } = feedbackForm;
+    if (!name || !email || !feedback) {
+      alert("Please fill in all fields.");
+      return;
+    }
+
+    const newFeedback = {
+      courseId: currentReviewCourse.id,
+      courseTitle: currentReviewCourse.title,
+      name,
+      email,
+      feedback,
+      date: new Date().toLocaleString(),
+    };
+
+    await postData("feedback", newFeedback);
+    alert("Feedback submitted!");
     setShowReviewModal(false);
   };
 
@@ -113,6 +142,36 @@ const CoursesPage = () => {
     setCourseForm({ ...courseForm, [e.target.name]: e.target.value });
   };
 
+  const openAssignInstructorModal = (course) => {
+    setCurrentCourseForInstructor(course);
+    setInstructorData(
+      course.instructor || { name: "", email: "", specialization: "" }
+    );
+    setShowAssignModal(true);
+  };
+
+  const handleInstructorInput = (e) => {
+    setInstructorData({ ...instructorData, [e.target.name]: e.target.value });
+  };
+
+  const saveInstructor = async () => {
+    const { name, email, specialization } = instructorData;
+    if (!name || !email || !specialization) {
+      alert("Please fill all instructor fields.");
+      return;
+    }
+
+    const updatedCourse = {
+      ...currentCourseForInstructor,
+      instructor: instructorData,
+    };
+
+    await updateData("courses", currentCourseForInstructor.id, updatedCourse);
+    alert("Instructor assigned successfully!");
+    setShowAssignModal(false);
+    loadCourses();
+  };
+
   const saveCourse = async () => {
     const requiredFields = [
       "title",
@@ -140,14 +199,42 @@ const CoursesPage = () => {
   return (
     <div style={container}>
       {userRole === "admin" && (
-        <div style={topRight}>
-          <button style={btnSuccess} onClick={handleAdd}>
+        <div style={{ textAlign: "right", marginBottom: "20px" }}>
+          <button
+            style={{ ...btn, backgroundColor: "green" }}
+            onClick={handleAdd}
+          >
             + Add New Course
           </button>
+          <Link
+            to="/instructors"
+            style={{
+              ...btn,
+              backgroundColor: "#6c63ff",
+              marginLeft: "10px",
+              textDecoration: "none",
+              color: "#fff",
+              padding: "10px 10px",
+            }}
+          >
+            View Instructors
+          </Link>
+          <Link
+            to="/feedback"
+            style={{
+              ...btn,
+              backgroundColor: "#6c63ff",
+              marginLeft: "10px",
+              textDecoration: "none",
+              color: "#fff",
+              padding: "10px 10px",
+            }}
+          >
+            Feedbacks
+          </Link>
         </div>
       )}
 
-      {/* Filter */}
       <div style={formGroup}>
         <label htmlFor="categoryFilter" style={label}>
           Filter by Category:
@@ -167,7 +254,6 @@ const CoursesPage = () => {
         </select>
       </div>
 
-      {/* Search */}
       <div style={formGroup}>
         <label htmlFor="searchInput" style={label}>
           Search Courses by Title:
@@ -182,10 +268,9 @@ const CoursesPage = () => {
         />
       </div>
 
-      {/* Courses */}
       <div style={grid}>
-        {filteredCourses.map((course, idx) => (
-          <div key={idx} style={card}>
+        {filteredCourses.map((course) => (
+          <div key={course.id} style={card}>
             <img
               src={course.thumbnail}
               alt={course.title}
@@ -196,23 +281,40 @@ const CoursesPage = () => {
               }
             />
             <div style={{ padding: "10px" }}>
-              <h5>{course.title}</h5>
-              <p>{course.description}</p>
-              <p>
-                <strong>Category:</strong> {course.category}
-              </p>
-              <p>⭐ {course.reviews}</p>
+              <div style={{ height: "200px" }}>
+                <h5>{course.title}</h5>
+                <p>{course.description}</p>
+                <p>
+                  <strong>Category:</strong> {course.category}
+                </p>
+                <p>⭐ {course.reviews} Reviews</p>
+                {course.instructor && (
+                  <p style={{ fontSize: "17px", color: "green" }}>
+                    👨‍🏫 <strong>Instructor:</strong> {course.instructor.name}
+                  </p>
+                )}
+              </div>
               <div style={buttonGroup}>
                 <button style={btn} onClick={() => handlePreview(course.video)}>
                   Preview
                 </button>
-                <button style={btn} onClick={() => handleReview(course)}>
-                  Review
-                </button>
-                <button style={btn}>Enroll</button>
+                {userRole === "user" && (
+                  <button style={btn} onClick={() => handleReview(course)}>
+                    Review
+                  </button>
+                )}
                 {userRole === "admin" && (
                   <>
-                    <button style={btn} onClick={() => handleEdit(course)}>
+                    <button
+                      style={{ ...btn, backgroundColor: "#6c63ff" }}
+                      onClick={() => openAssignInstructorModal(course)}
+                    >
+                      Assign Instructor
+                    </button>
+                    <button
+                      style={{ ...btn, backgroundColor: "green" }}
+                      onClick={() => handleEdit(course)}
+                    >
                       Edit
                     </button>
                     <button
@@ -248,35 +350,66 @@ const CoursesPage = () => {
         </div>
       )}
 
-      {/* Review Modal */}
+      {/* Feedback Modal */}
       {showReviewModal && currentReviewCourse && (
         <div style={modalBackdrop}>
           <div style={modalContent}>
             <button onClick={() => setShowReviewModal(false)} style={closeBtn}>
               ❌
             </button>
-            <h3>{currentReviewCourse.title}</h3>
-            <textarea
-              placeholder="Write a review..."
-              value={reviewText}
-              onChange={(e) => setReviewText(e.target.value)}
-              style={input}
-            />
-            <button onClick={submitReview} style={btn}>
-              Submit Review
+            <h3>Feedback for {currentReviewCourse.title}</h3>
+            {["name", "email", "feedback"].map((field) => (
+              <input
+                key={field}
+                type={field === "email" ? "email" : "text"}
+                name={field}
+                placeholder={field.charAt(0).toUpperCase() + field.slice(1)}
+                value={feedbackForm[field]}
+                onChange={(e) =>
+                  setFeedbackForm({ ...feedbackForm, [field]: e.target.value })
+                }
+                style={{ ...input, marginBottom: "10px" }}
+              />
+            ))}
+            <button onClick={submitFeedback} style={btn}>
+              Submit Feedback
             </button>
           </div>
         </div>
       )}
 
-      {/* Add/Edit Modal */}
+      {/* Instructor and Course Modals can go here... (already handled above) */}
+      {showAssignModal && (
+        <div style={modalBackdrop}>
+          <div style={modalContent}>
+            <button onClick={() => setShowAssignModal(false)} style={closeBtn}>
+              ❌
+            </button>
+            <h3>Assign Instructor</h3>
+            {["name", "email", "specialization"].map((field) => (
+              <input
+                key={field}
+                name={field}
+                type={field === "email" ? "email" : "text"}
+                placeholder={field.charAt(0).toUpperCase() + field.slice(1)}
+                value={instructorData[field]}
+                onChange={handleInstructorInput}
+                style={{ ...input, marginBottom: "10px" }}
+              />
+            ))}
+            <button onClick={saveInstructor} style={btn}>
+              Save Instructor
+            </button>
+          </div>
+        </div>
+      )}
       {showCourseModal && (
         <div style={modalBackdrop}>
           <div style={modalContent}>
             <button onClick={() => setShowCourseModal(false)} style={closeBtn}>
               ❌
             </button>
-            <h3>{isEditing ? "Edit Course" : "Add Course"}</h3>
+            <h3>{isEditing ? "Edit Course" : "Add New Course"}</h3>
             {[
               "title",
               "category",
@@ -288,14 +421,15 @@ const CoursesPage = () => {
               <input
                 key={field}
                 name={field}
-                placeholder={field}
+                type="text"
+                placeholder={field.charAt(0).toUpperCase() + field.slice(1)}
                 value={courseForm[field]}
                 onChange={handleCourseInput}
                 style={{ ...input, marginBottom: "10px" }}
               />
             ))}
             <button onClick={saveCourse} style={btn}>
-              {isEditing ? "Update" : "Save"}
+              {isEditing ? "Update Course" : "Save Course"}
             </button>
           </div>
         </div>
@@ -346,19 +480,14 @@ const btn = {
   margin: "5px 5px 0 0",
   cursor: "pointer",
 };
-const btnSuccess = {
-  ...btn,
-  backgroundColor: "green",
-};
 const buttonGroup = {
   display: "flex",
   flexWrap: "wrap",
-  gap: "10px",
-  marginTop: "10px",
-};
-const topRight = {
-  textAlign: "right",
-  marginBottom: "20px",
+  marginTop: "20px",
+  justifyContent: "space-evenly",
+  alignItems: "center",
+  flexDirection: "row",
+  marginBottom: "10px",
 };
 const modalBackdrop = {
   position: "fixed",

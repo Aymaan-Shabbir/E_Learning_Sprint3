@@ -35,10 +35,10 @@ const TopRatedCourses = () => {
 
       <div
         id="topRatedCarousel"
-        className="carousel slide"
+        className="carousel slide "
         data-bs-ride="carousel"
       >
-        <div className="carousel-inner">
+        <div className="carousel-inner ">
           {topRatedChunks.map((chunk, index) => (
             <div
               className={`carousel-item ${index === 0 ? "active" : ""}`}
@@ -51,11 +51,11 @@ const TopRatedCourses = () => {
                 {chunk.map((course) => (
                   <div
                     key={course.id}
-                    className="card"
+                    className="card bg-dark text-light"
                     style={{
                       width: "18rem",
-                      boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
-                      border: "none",
+                      boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
+                      border: "1px solid #444",
                     }}
                   >
                     <img
@@ -97,7 +97,6 @@ const TopRatedCourses = () => {
           data-bs-slide="prev"
         >
           <span className="carousel-control-prev-icon" aria-hidden="true" />
-          <span>Previous</span>
         </button>
         <button
           className="carousel-control-next"
@@ -106,7 +105,6 @@ const TopRatedCourses = () => {
           data-bs-slide="next"
         >
           <span className="carousel-control-next-icon" aria-hidden="true" />
-          <span>Next</span>
         </button>
       </div>
     </div>

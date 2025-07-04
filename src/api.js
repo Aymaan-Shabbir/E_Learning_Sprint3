@@ -1,8 +1,8 @@
 // src/api.js
-const BASE_URL = "http://localhost:5000";
+const BASE_URL = "http://localhost:3001";
 
 export const fetchData = async (resource) =>
-  await fetch(`${BASE_URL}/${resource}`).then(res => res.json());
+  await fetch(`${BASE_URL}/${resource}`).then((res) => res.json());
 
 export const postData = async (resource, data) =>
   await fetch(`${BASE_URL}/${resource}`, {
